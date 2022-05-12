@@ -66,6 +66,7 @@ export class PlaygroundComponent implements OnInit {
   currentTab: string;
   excludeItemsThatContain = false;
   excludeItemsThatContainTexts = 'Newsletter, Advertisement';
+  customUrl = false;
 
   private proxyUrl: string;
   hasJsSupport = false;
@@ -77,10 +78,24 @@ export class PlaygroundComponent implements OnInit {
   public ngOnInit() {
     this.resetAll();
     this.activatedRoute.queryParams.subscribe(params => {
+      if (params.pContext) {
+        this.customContextXPath = params.pContext;
+        if (params.pLink) {
+          this.customLinkXPath = params.pLink;
+        }
+        this.customUrl = true;
+      }
+
+      if (params.js) {
+        this.hasJsSupport = params.js;
+      }
+
+
       if (params.url) {
         this.url = params.url;
         this.parseFromUrlInternal();
       }
+
     });
 
     this.settings.settings().then(settings => {
@@ -99,6 +114,10 @@ export class PlaygroundComponent implements OnInit {
     this.options.pContext = rule.contextXPath;
     this.options.pLink = rule.linkXPath;
     this.options.x = rule.extendContext;
+
+    this.customContextXPath = rule.contextXPath;
+    this.customLinkXPath = rule.linkXPath;
+
     this.feedService.applyRule(this.html, this.url, rule, this.options).subscribe(articles => {
       this.articles = articles;
     });
@@ -294,7 +313,12 @@ export class PlaygroundComponent implements OnInit {
         this.rules = response.rules;
         this.prepareIframe(this.patchHtml(response.html, this.url));
         setTimeout(() => {
-          this.applyRule(this.rules[0]);
+          if (this.customUrl) {
+            this.applyCustomRule();
+            this.customUrl = false;
+          } else {
+            this.applyRule(this.rules[0]);
+          }
         }, 1000);
         this.setCurrentTab(this.showViz);
         this.feeds = response.feeds;
