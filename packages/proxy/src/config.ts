@@ -1,6 +1,7 @@
 const build = require('./build.json');
 
 const env = process.env.RP_ENV || 'dev';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export const config = {
   build,
