@@ -98,7 +98,7 @@ export interface Logger {
 export class FeedParser {
 
   private readonly url: URL;
-  private readonly minLinkGroupSize = 1;
+  private readonly minLinkGroupSize = 2;
   private readonly minWordCountOFLink: number = 1;
 
   constructor(private document: HTMLDocument,
