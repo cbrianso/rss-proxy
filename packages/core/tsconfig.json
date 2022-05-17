@@ -5,7 +5,7 @@
     "outDir": "./dist",
     "types": [
       "mocha",
-      "chai",
+      //"chai",
       "node"
     ],
     "target": "esnext"

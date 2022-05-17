@@ -67,14 +67,14 @@ docker_image () {
   docker run -p 4200:3000 -it damoeb/rss-proxy:js
   verify_image
 
-  echo "tagging images with ${tag}"
-  docker tag damoeb/rss-proxy damoeb/rss-proxy:${tag}
-  docker tag damoeb/rss-proxy damoeb/rss-proxy:js-${tag}
-  echo "pushing images"
-  docker push damoeb/rss-proxy:latest
-  docker push damoeb/rss-proxy:${tag}
-  docker push damoeb/rss-proxy:js
-  docker push damoeb/rss-proxy:js-${tag}
+  #echo "tagging images with ${tag}"
+  #docker tag damoeb/rss-proxy damoeb/rss-proxy:${tag}
+  #docker tag damoeb/rss-proxy damoeb/rss-proxy:js-${tag}
+  #echo "pushing images"
+  #docker push damoeb/rss-proxy:latest
+  #docker push damoeb/rss-proxy:${tag}
+  #docker push damoeb/rss-proxy:js
+  #docker push damoeb/rss-proxy:js-${tag}
 }
 
 
