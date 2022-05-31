@@ -1,5 +1,5 @@
 import {JSDOM} from 'jsdom';
-import {ContentType, FeedParser, OutputType} from './feed-parser';
+import {ContentType, FeedParser, OutputType, TitleType, LinkType} from './feed-parser';
 import {expect} from 'chai';
 import {describe, it} from 'mocha';
 import * as fs from 'fs';
@@ -26,7 +26,12 @@ describe('Raw Websites', () => {
           const expectedLinks = fs.readFileSync('./src/raw-websites/' + file.replace('input.html', 'output.json'), 'utf8');
 
           const doc = toDocument(markup);
-          const options = {c: ContentType.RAW, o: OutputType.JSON};
+          const options = {
+            t: TitleType.LINK,
+            l: LinkType.LINK,
+            c: ContentType.RAW,
+            o: OutputType.JSON
+          };
           const feedParser = new FeedParser(doc, 'http://example.com', options, {
             log: () => {
             }, error: console.error

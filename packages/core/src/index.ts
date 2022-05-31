@@ -12,6 +12,8 @@ import {
   LinkPointer,
   Logger,
   OutputType,
+  TitleType,
+  LinkType,
   SimpleFeedResult,
   SourceType,
   TitleFeatures
@@ -34,8 +36,9 @@ export {
   LogCollector,
   ArticleRule,
   TitleFeatures,
+  TitleType,
+  LinkType,
   OutputType,
   ArticleContext,
   LinkGroup
 };
-

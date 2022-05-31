@@ -13,7 +13,9 @@ import {
   FeedParserOptions,
   FeedParserResult,
   FeedUrl,
-  OutputType
+  OutputType,
+  TitleType,
+  LinkType
 } from '../../../../../core/src';
 import {build} from '../../../environments/build';
 import * as URI from 'urijs';
@@ -168,6 +170,8 @@ export class PlaygroundComponent implements OnInit {
 
   public resetAll() {
     this.options = {
+      t: TitleType.LINK,
+      l: LinkType.LINK,
       o: OutputType.ATOM,
       c: ContentType.RAW,
       xq: this.excludeItemsThatContainTexts,

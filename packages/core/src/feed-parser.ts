@@ -20,8 +20,16 @@ export interface ArticleRule {
   id: string;
 }
 
+export enum TitleType {
+  LINK = 'LINK', CONTENT = 'CONTENT'
+}
+
 export enum ContentType {
   RAW = 'RAW', TEXT = 'TEXT', NONE = 'NONE'
+}
+
+export enum LinkType {
+  LINK = 'LINK', PAGE = 'PAGE'
 }
 
 export enum OutputType {
@@ -57,6 +65,8 @@ export interface FeedParserOptions {
   js?: boolean;
   o: OutputType;
   c?: ContentType,
+  l?: LinkType,
+  t?: TitleType,
   timeoutSec?: number,
   pContext?: string,
   pLink?: string,

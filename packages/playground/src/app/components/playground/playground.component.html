@@ -104,11 +104,23 @@
                 <label><input [(ngModel)]="options.o" name="feedType" type="radio" value="JSON">JSON</label>
               </li>
               <li>
+                <p>Feed Entry Title</p>
+                <label><input [(ngModel)]="options.t" name="entryTitle" type="radio" value="LINK"><strong>Link text</strong>
+                  (default)</label>
+                <label><input [(ngModel)]="options.t" name="entryTitle" type="radio" value="CONTENT">Content</label>
+              </li>
+              <li>
                 <p>Feed Entry Content</p>
                 <label><input [(ngModel)]="options.c" name="entryContent" type="radio" value="RAW"><strong>Raw</strong>
                   (default)</label>
                 <label><input [(ngModel)]="options.c" name="entryContent" type="radio" value="TEXT">Text</label>
                 <label><input [(ngModel)]="options.c" name="entryContent" type="radio" value="NONE">Empty</label>
+              </li>
+              <li>
+                <p>Feed link</p>
+                <label><input [(ngModel)]="options.l" name="entryLink" type="radio" value="LINK"><strong>Entry link</strong>
+                  (default)</label>
+                <label><input [(ngModel)]="options.l" name="entryLink" type="radio" value="PAGE">Page link</label>
               </li>
             </ul>
 

@@ -2,7 +2,7 @@ import {Express, Request, Response} from 'express';
 import cors from 'cors';
 import iconv from 'iconv-lite';
 
-import {FeedParserOptions, FeedParserResult, OutputType, SimpleFeedResult} from '@rss-proxy/core';
+import {FeedParserOptions, FeedParserResult, OutputType, TitleType, LinkType, SimpleFeedResult} from '@rss-proxy/core';
 import logger from '../logger';
 import {FeedParserError, feedService, GetResponse} from '../services/feedService';
 

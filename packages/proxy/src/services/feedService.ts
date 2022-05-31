@@ -8,6 +8,8 @@ import {
   FeedUrl,
   LogCollector,
   OutputType,
+  TitleType,
+  LinkType,
   SimpleFeedResult
 } from '@rss-proxy/core';
 import {Feed} from 'feed';
@@ -28,6 +30,8 @@ export interface GetResponse {
 }
 
 const defaultOptions: FeedParserOptions = {
+  t: TitleType.LINK,
+  l: LinkType.LINK,
   o: OutputType.ATOM,
   c: ContentType.RAW,
   js: false,
@@ -111,6 +115,12 @@ export const feedService = new class FeedService {
     const actualOptions: Partial<FeedParserOptions> = {};
     if (FeedService.isDefined(request.query.c as any)) {
       actualOptions.c = request.query.c as ContentType;
+    }
+    if (FeedService.isDefined(request.query.t as any)) {
+      actualOptions.t = request.query.t as TitleType;
+    }
+    if (FeedService.isDefined(request.query.l as any)) {
+      actualOptions.l = request.query.l as LinkType;
     }
     if (FeedService.isDefined(request.query.js as any)) {
       actualOptions.js = request.query.js === 'true';
@@ -220,8 +230,10 @@ export const feedService = new class FeedService {
       articles.forEach((article: Article) => {
         feed.addItem({
           id: FeedService.toURI(article),
-          title: article.title,
-          link: article.link, // todo mag ATOM feeds render unescaped & which causes an invalid xml, RSS feeds work fine
+          //title: article.title,
+          title: FeedService.getTitle(options, article),
+          //link: article.link, // todo mag ATOM feeds render unescaped & which causes an invalid xml, RSS feeds work fine
+          link: FeedService.getLink(options, article, url),
           published: new Date(),
           date: new Date(),
           content: FeedService.getContent(options, article)
@@ -266,6 +278,20 @@ export const feedService = new class FeedService {
     }
 
     return article.text;
+  }
+
+  private static getTitle(options: FeedParserOptions, article: Article) {
+    if (options.t === TitleType.CONTENT) {
+      return FeedService.getContent(options, article);
+    }
+    return article.title;
+  }
+
+  private static getLink(options: FeedParserOptions, article: Article, url: string) {
+    if (options.l === LinkType.PAGE) {
+      return url;
+    }
+    return article.link;
   }
 
   private findFeedUrls(doc: Document, url: string): FeedUrl[] {
