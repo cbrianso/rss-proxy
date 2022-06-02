@@ -314,7 +314,9 @@ export class PlaygroundComponent implements OnInit {
       } else {
         this.isGenerated = true;
         console.log('Proxy replies an generated feed');
-        this.rules = response.rules;
+        this.rules = response.rules.filter(function( element ) {
+          return element !== undefined;
+        });
         this.prepareIframe(this.patchHtml(response.html, this.url));
         setTimeout(() => {
           if (this.customUrl) {
