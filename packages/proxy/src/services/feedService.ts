@@ -282,7 +282,10 @@ export const feedService = new class FeedService {
 
   private static getTitle(options: FeedParserOptions, article: Article) {
     if (options.t === TitleType.CONTENT) {
-      return FeedService.getContent(options, article);
+      if (options.c === ContentType.RAW) {
+        return article.content
+      }
+      return article.text
     }
     return article.title;
   }
