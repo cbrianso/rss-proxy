@@ -159,6 +159,9 @@ export class FeedParser {
     if (elem.textContent.replace(/[\r\n\t ]+/g, '').length === 0) {
       return false;
     }
+    if (rule.linkXPath.length == 0) {
+      return true;
+    }
     const links = this.evaluateXPath(rule.linkXPath, elem, document);
     if (links.length === 0) {
       return false;
@@ -499,11 +502,19 @@ export class FeedParser {
           const p = rule.extendContext.indexOf('p') > -1 ? this.withAbsUrls(element.previousElementSibling).outerHTML : '';
           const n = rule.extendContext.indexOf('n') > -1 ? this.withAbsUrls(element.nextElementSibling).outerHTML : '';
           const content = `<div>${ p }${ this.withAbsUrls(element).outerHTML }${ n }</div>`;
-          const link = FeedParser.evaluateXPath(rule.linkXPath, element, this.document)[0];
-          const linkText = link.textContent;
-          const href = link.getAttribute('href');
+          //TODO: personalitzar
+
+          var linkText = content;
+          var href = '';
+          if (rule.linkXPath.length > 0) {
+            const link = FeedParser.evaluateXPath(rule.linkXPath, element, this.document)[0];
+            linkText = link.textContent;
+            href = link.getAttribute('href');
+          }
+
           const article: Article = {
             title: linkText.replace(/^[\n\t\r ]+|[\n\t\r ]+$/g, ' '),
+            //title: linkText,
             link: FeedParser.toAbsoluteUrl(this.url, href),
             content,
             text: element.textContent,
