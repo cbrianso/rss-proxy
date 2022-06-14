@@ -54,7 +54,8 @@ export const feedService = new class FeedService {
   }
 
   private static toURI(article: Article) {
-    return `tag:rss-proxy.migor.org:${article.link}`;
+    var hash = crypto.createHash('md5').update(article.link+article.title).digest('hex');
+    return `tag:rss-proxy.migor.org:${hash}`;
   }
 
   private static isDefined(value: string) {
