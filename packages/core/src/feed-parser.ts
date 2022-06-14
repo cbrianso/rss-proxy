@@ -1,3 +1,5 @@
+import * as URI from 'urijs';
+
 export interface FeedUrl {
   name: string;
   url: string;
@@ -107,7 +109,7 @@ export interface Logger {
 
 export class FeedParser {
 
-  private readonly url: URL;
+  private readonly url: URI;
   private readonly minLinkGroupSize = 2;
   private readonly minWordCountOFLink: number = 1;
 
@@ -115,7 +117,7 @@ export class FeedParser {
               url: string,
               private options: FeedParserOptions,
               private logger: Logger) {
-    this.url = new URL(url);
+    this.url = new URI(url);
   }
 
   public static getRelativeCssPath(node: HTMLElement, context: HTMLElement, withClassNames = false) {
@@ -139,12 +141,15 @@ export class FeedParser {
     return text.trim().split(' ').filter(word => word.length > 0);
   }
 
-  public static toAbsoluteUrl(url: URL, link: string) {
-    if (link.endsWith('//')) {
+  public static toAbsoluteUrl(url: URI, link: string) {
+    /*if (link.endsWith('//')) {
       link = link.substring(0, link.length - 1);
     }
     if (link.startsWith('http://') || link.startsWith('https://')) {
       return link;
+    }
+    if (link.startsWith('./')) {
+      return`${url.href}/${link.replace('./', '')}`;
     }
     if (link.startsWith('//')) {
       return `${url.protocol}${link}`;
@@ -152,7 +157,9 @@ export class FeedParser {
     if (link.startsWith('/')) {
       return `${url.origin}${link}`;
     }
-    return `${url.origin}/${link}`;
+    return `${url.origin}/${link}`;*/
+    const absoluteUrl = new URI(link).absoluteTo(url);
+    return absoluteUrl.toString();
   }
 
   public static qualifiesAsArticle(elem: HTMLElement, rule: ArticleRule, document: Document): boolean {
