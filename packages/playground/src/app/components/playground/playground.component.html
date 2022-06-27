@@ -82,6 +82,10 @@
                   <input [(ngModel)]="customLinkXPath" autocomplete="off" name="link" style="width: 100%"
                     placeholder="Links relative XPath">
                 </div>
+                <div aria-label="Title prefix relative XPath (e.g. ./a[1]/strong)" class="tooltip bottom col-lg-8">
+                  <input [(ngModel)]="customTitlePrefixXPath" autocomplete="off" name="titleprefix" style="width: 100%"
+                    placeholder="Title prefix relative XPath">
+                </div>
                 <div class="col-lg-4">
                   <a (click)="applyCustomRule()" class="button secondary" href="javascript:void(0)">
                     Apply

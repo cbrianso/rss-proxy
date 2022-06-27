@@ -63,6 +63,7 @@ export class FeedService {
       + this.feedUrlFragment('pContext', options)
       + this.feedUrlFragment('js', options)
       + this.feedUrlFragment('pLink', options)
+      + this.feedUrlFragment('tPrefix', options)
       + this.feedUrlFragment('o', options)
       + this.feedUrlFragment('l', options)
       + this.feedUrlFragment('t', options)
@@ -78,6 +79,7 @@ export class FeedService {
       + this.feedUrlFragment('pContext', options)
       + this.feedUrlFragment('js', options)
       + this.feedUrlFragment('pLink', options)
+      + this.feedUrlFragment('tPrefix', options)
       + this.feedUrlFragment('o', options)
       + this.feedUrlFragment('l', options)
       + this.feedUrlFragment('t', options)
@@ -89,7 +91,7 @@ export class FeedService {
     return this.httpClient.get(parserUrl) as Observable<FeedParserResult>;
   }
 
-  private feedUrlFragment(id: 'c' | 'o' | 'l' | 't' | 'xq' | 'pContext' | 'pLink' | 'js' | 'x', options: FeedParserOptions) {
+  private feedUrlFragment(id: 'c' | 'o' | 'l' | 't' | 'xq' | 'pContext' | 'pLink' | 'tPrefix' | 'js' | 'x', options: FeedParserOptions) {
 
     function prop<T, K extends keyof T>(obj: T, key: K) {
       return obj[key];

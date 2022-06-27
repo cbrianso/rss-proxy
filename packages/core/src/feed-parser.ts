@@ -19,6 +19,7 @@ export interface ArticleRule {
   linkXPath: string;
   extendContext: string;
   contextXPath: string;
+  titlePrefixXPath: string;
   id: string;
 }
 
@@ -72,6 +73,7 @@ export interface FeedParserOptions {
   timeoutSec?: number,
   pContext?: string,
   pLink?: string,
+  tPrefix?: string,
   fallback?: boolean, // falls back to dirst native feed
   xq?: string, // exclude query
   x?: string // context extension
@@ -500,7 +502,7 @@ export class FeedParser {
   }
 
   public getArticlesByRule(rule: ArticleRule): Article[] {
-
+    this.logger.error('test');
     this.logger.log('apply rule', rule.id);
 
     return FeedParser.evaluateXPath(rule.contextXPath, this.document.body, this.document)
@@ -518,6 +520,12 @@ export class FeedParser {
             linkText = link.textContent;
             href = link.getAttribute('href');
           }
+          if (rule.titlePrefixXPath.length > 0) {
+            var titlePrefix = FeedParser.evaluateXPath(rule.titlePrefixXPath, element, this.document)[0];
+            if (titlePrefix.textContent.length > 0) {
+              linkText = titlePrefix.textContent + ' - ' + linkText;
+            }
+          }
 
           const article: Article = {
             title: linkText.replace(/^[\n\t\r ]+|[\n\t\r ]+$/g, ' '),
@@ -533,6 +541,7 @@ export class FeedParser {
 
           return article;
         } catch (err) {
+          this.logger.error('error', err);
           return undefined;
         }
       })
@@ -616,6 +625,7 @@ export class FeedParser {
     const referenceArticle = contexts[0];
     const linkXPath = FeedParser.fixLinkXPath(FeedParser.getRelativeXPath(referenceArticle.linkElement, referenceArticle.contextElement));
     const {contextXPath, extendContext} = FeedParser.generalizeContextXPath(contexts, root);
+    const titlePrefixXPath = '';
     return {
       count: contexts.length,
       score: 0,
@@ -623,6 +633,7 @@ export class FeedParser {
       extendContext,
       linkXPath,
       contextXPath,
+      titlePrefixXPath,
       id: contextXPath + linkXPath
     };
   }

@@ -138,6 +138,11 @@ export const feedService = new class FeedService {
     if (FeedService.isDefined(request.query.pLink as any)) {
       actualOptions.pLink = request.query.pLink as string;
     }
+
+    if (FeedService.isDefined(request.query.tPrefix as any)) {
+      actualOptions.tPrefix = request.query.tPrefix as string;
+    }
+
     if (FeedService.isDefined(request.query.x as any)) {
       actualOptions.x = request.query.x as string;
     }
@@ -160,7 +165,7 @@ export const feedService = new class FeedService {
   public mapErrorToFeed(url: string, message: string, options: FeedParserOptions): string {
     let id = 'tag:rss-proxy.migor.org:error';
     if (options) {
-      id = `${id}-contextXPath:${options.pContext}-linkXPath:${options.pLink}`;
+      id = `${id}-contextXPath:${options.pContext}-linkXPath:${options.pLink}-titlePrefixXPath:${options.tPrefix}`;
     } else {
       // render one internal error per month
       const today = new Date();
@@ -220,6 +225,7 @@ export const feedService = new class FeedService {
       rule = {
         contextXPath: options.pContext,
         linkXPath: options.pLink,
+        titlePrefixXPath: options.tPrefix,
         id: options.pLink,
         extendContext: options.x
       };

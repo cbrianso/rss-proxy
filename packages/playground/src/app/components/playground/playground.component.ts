@@ -54,6 +54,7 @@ export class PlaygroundComponent implements OnInit {
   url: string;
   customContextXPath: string;
   customLinkXPath: string;
+  customTitlePrefixXPath: string;
   showViz = 'viz';
   hasResults = false;
   iframeLoaded = false;
@@ -115,6 +116,7 @@ export class PlaygroundComponent implements OnInit {
     this.currentRule = rule;
     this.options.pContext = rule.contextXPath;
     this.options.pLink = rule.linkXPath;
+    this.options.tPrefix = rule.titlePrefixXPath;
     this.options.x = rule.extendContext;
 
     this.customContextXPath = rule.contextXPath;
@@ -155,6 +157,7 @@ export class PlaygroundComponent implements OnInit {
       linkXPath: this.customLinkXPath,
       extendContext: 's',
       contextXPath: this.customContextXPath,
+      titlePrefixXPath: this.customTitlePrefixXPath,
       id: 'custom',
     };
     this.applyRule(rule);
