@@ -139,6 +139,7 @@ export const feedService = new class FeedService {
       actualOptions.pLink = request.query.pLink as string;
     }
 
+    actualOptions.tPrefix = '';
     if (FeedService.isDefined(request.query.tPrefix as any)) {
       actualOptions.tPrefix = request.query.tPrefix as string;
     }
